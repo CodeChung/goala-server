@@ -7,5 +7,6 @@ CREATE TABLE goals (
     title TEXT NOT NULL,
     last_logged DATE,
     schedule jsonb,
-    countdown DATE
+    countdown INTEGER,
+    block_sequence INTEGER[]
 )

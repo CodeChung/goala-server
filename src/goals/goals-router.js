@@ -14,32 +14,17 @@ goalsRouter
     .all(requireAuth)
     .get((req, res, next) => {
         const userId = req.user.id
-        GoalsService.getAllGoals(req.app.get('db'), userId)
+        GoalsService.getGoalsByUserId(req.app.get('db'), userId)
             .then(goals => {
+                // returns goal objects with matching userId
                 res.status(200).json(goals)
-                // setting up dialogflow clients for each goal!!
-                goals.forEach(goal => {
-                    if (!goalCache.get(`goal-${goal.id}`)) {
-                        const sessionId = uuid.v4();
- 
-                        // Create a new session
-                        const sessionClient = new dialogflow.SessionsClient({
-                            keyFilename: '../../coachbot-f3df93d5ee22.json'
-                        });
-                        const dialogflowSettings = {
-                            sessionId,
-                            sessionClient
-                        }
-                        goalCache.set(`goal-${goal.id}`, dialogflowSettings, 3600)
-                    }
-                })
             })
             .catch(next)
     })
     .post(jsonBodyParser, (req, res) => {
         const user_id = req.user.id
-        const { title, schedule, duration, } = req.body
-        const newGoal = { user_id, title, schedule, duration, }
+        const { action_id, title, schedule, block_sequence } = req.body
+        const newGoal = { action_id, user_id, title, schedule, duration, block_sequence, last_logged }
 
         GoalsService.insertGoal(req.app.get('db'), newGoal)
             .then(goals => {
@@ -59,21 +44,6 @@ goalsRouter
                         .json({ error: 'Goal not found' })
                 }
                 res.status(200).json(goal)
-                // // Here we store a dialogflow session for the specific goal
-                // TODO FIX: session doesn't persist between calls 
-
-                // console.log(`session-${goalId}`)
-                // console.log(req.session[`session-${goalId}`], 'yoogabba!!!')
-                // console.log('views', req.session.views)
-                // if (!req.session[`session-${goalId}`]) {
-                //     const sessionClient = new dialogflow.SessionsClient({
-                //         keyFilename: '../../coachbot-f3df93d5ee22.json'
-                //     });
-                //     const sessionId = uuid.v4();
-                //     req.session[`session-${goalId}`] = { sessionClient, sessionId }
-                //     console.log(`session-${goalId}`)
-                //     console.log(req.session[`session-${goalId}`], 'yoo!!!')
-                // }
             })
             .catch(next)
     })
