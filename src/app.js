@@ -4,10 +4,12 @@ const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const authRouter = require('./auth/auth-router')
-const usersRouter = require('./users/users-router')
+const blocksRouter = require('./blocks/blocks-router')
+// const countsRouter = require('./counts/counts-router')
+const entriesRouter = require('./entries/entries-router')
 const goalsRouter = require('./goals/goals-router')
 const remindersRouter = require('./reminders/reminders-router')
-const blocksRouter = require('./blocks/blocks-router')
+const usersRouter = require('./users/users-router')
 
 const app = express()
 
@@ -18,9 +20,12 @@ app.use(cors())
 app.use(helmet())
 
 app.use('/api/auth', authRouter)
-app.use('/api/users', usersRouter)
+app.use('/api/blocks', blocksRouter)
+// app.use('/api/counts', countsRouter)
+app.use('/api/entries', entriesRouter)
 app.use('/api/goals', goalsRouter)
 app.use('/api/reminders', remindersRouter)
+app.use('/api/users', usersRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello, world!')

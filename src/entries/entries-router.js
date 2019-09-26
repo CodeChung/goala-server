@@ -1,60 +1,63 @@
 const express = require('express');
 const path = require('path');
-const GoalsService = require('./goals-service');
+const EntriesService = require('./entries-service');
 const requireAuth = require('../middleware/jwt-auth');
-const uuid = require('uuid');
 
-const goalsRouter = express.Router()
+const entriesRouter = express.Router()
 const jsonBodyParser = express.json()
 
-goalsRouter
+entriesRouter
     .route('/')
     .all(requireAuth)
     .get((req, res, next) => {
         const userId = req.user.id
-        GoalsService.getGoalsByUserId(req.app.get('db'), userId)
-            .then(goals => {
+        EntriesService.getEntriesByUserId(req.app.get('db'), userId)
+            .then(entries => {
                 // returns goal objects with matching userId
-                res.status(200).json(goals)
+                res.status(200).json(entries)
             })
             .catch(next)
+    })
+    .patch((req, res, next) => {
+        const { entryUpdates } = req.body
+        
+        if (Object.keys(entryUpdates).length === 0) {
+            return res.status(400).json({
+                error: { message: `patch request must supply values`}
+            })
+        }
+        entriesService.updateEntry(req.app.get('db'), entryUpdates.id, entryUpdates)
+            .then(updateEntry => {
+                logger.info(`reminder with id ${updateEntry.id} updated`)
+                res.status(204).end()
+            })
     })
     .post(jsonBodyParser, (req, res) => {
         const user_id = req.user.id
-        const { action_id, title, schedule, block_sequence } = req.body
-        const newGoal = { action_id, user_id, title, schedule, duration, block_sequence, last_logged }
+        const { title, date, text, blocks } = req.body
+        const newEntry = { user_id, title, date, text, blocks }
 
-        GoalsService.insertGoal(req.app.get('db'), newGoal)
-            .then(goals => {
-                res.status(201).json(goals)
+        EntriesService.insertEntry(req.app.get('db'), newEntry)
+            .then(entries => {
+                res.status(201).json(entries)
             })
     })
 
-goalsRouter
-    .route('/:goalId')
+entriesRouter
+    .route('/search/:keyword')
     .all(requireAuth)
     .get((req, res, next) => {
-        const goalId = req.params.goalId
-        GoalsService.getGoalById(req.app.get('db'), goalId)
-            .then(goal => {
-                if (!goal.length) {
+        const user_id = req.user.id
+        const keyword = req.params.keyword
+        EntriesService.geEntriesByKeyword(req.app.get('db'), user_id, keyword)
+            .then(entries => {
+                if (!entries.length) {
                     return res.status(404)
-                        .json({ error: 'Goal not found' })
+                        .json({ error: 'entries not found' })
                 }
-                res.status(200).json(goal)
+                res.status(200).json(entries)
             })
             .catch(next)
     })
-    .delete((req, res, next) => {
-        const goalId = req.params.goalId
-        GoalsService.deleteGoal(req.app.get('db'), goalId)
-            .then(goalDeleted => {
-                if (!goalDeleted) {
-                    return res.status(401)
-                        .json({ error: 'Unable to delete goal, try again'})
-                }
-                res.status(201)
-            })
-    })
     
-module.exports = goalsRouter
+module.exports = entriesRouter

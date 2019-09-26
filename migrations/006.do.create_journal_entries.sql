@@ -3,6 +3,7 @@ CREATE TABLE journal_entries (
     user_id INTEGER
         REFERENCES users(id) ON DELETE CASCADE NOT NULL,
     date DATE NOT NULL DEFAULT now(),
+    title TEXT,
     -- text will hold journal text, encoded with ${<Stamp type={'Count'} value={2} dimension='col-4' />}
     text TEXT,
     blocks jsonb
