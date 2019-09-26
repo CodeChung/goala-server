@@ -6,6 +6,8 @@ const { NODE_ENV } = require('./config')
 const authRouter = require('./auth/auth-router')
 const usersRouter = require('./users/users-router')
 const goalsRouter = require('./goals/goals-router')
+const remindersRouter = require('./reminders/reminders-router')
+const blocksRouter = require('./blocks/blocks-router')
 
 const app = express()
 
@@ -18,6 +20,7 @@ app.use(helmet())
 app.use('/api/auth', authRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/goals', goalsRouter)
+app.use('/api/reminders', remindersRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello, world!')
