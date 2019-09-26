@@ -22,6 +22,7 @@ authRouter
             loginUser.username
         )
             .then(dbUser => {
+                console.log(loginUser)
                 if (!dbUser) {
                     return res.status(400).json({
                         error: 'Incorrect username'
