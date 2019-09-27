@@ -23,5 +23,5 @@ CREATE TABLE blocks (
     date DATE DEFAULT now(),
     type type NOT NULL,
     value jsonb NOT NULL,
-    dimension TEXT NOT NULL,
+    dimension TEXT NOT NULL
 )
