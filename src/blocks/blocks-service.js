@@ -3,6 +3,12 @@ const BlocksService = {
         return db('blocks')
             .select('*')
             .where('id', blockId)
+            .then(res => res)
+    },
+    getBlockSequence(db, ids) {
+        return db('blocks')
+            .select('*')
+            .whereIn('id', ids)
     },
 
     // gets the sequence of block ids matching goalId

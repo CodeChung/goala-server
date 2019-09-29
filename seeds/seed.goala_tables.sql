@@ -36,8 +36,8 @@ VALUES
 -- Creating reminders seeds
 INSERT INTO reminders(user_id, date, title, schedule, block_sequence)
 VALUES
-  (1, '2019-07-26', 'Groceries', '{"schedule": "Su"}', '{18, 19, 20, 21}'),
-  (1, '2019-07-26', 'Go to DMV', '{"date": "Aug-22-2019"}', '{22, 23, 24, 25, 26}');
+  (1, '2019-07-26', 'Groceries', '{"schedule": "Su"}', '{11, 12, 13, 14}'),
+  (1, '2019-07-26', 'Go to DMV', '{"date": "Aug-22-2019"}', '{15, 16, 17, 18, 19}');
 
 
 
@@ -48,31 +48,29 @@ VALUES
   (1, 1, null, '2019-07-26', 'notes', '{"text": "Dont forget the climbing gear"}', 'col-3'),
   (1, 1, null, '2019-07-26', 'yesno', '{"yes": "true"}', 'col-2'),
   (1, 2, null, '2019-07-26', 'text', '{"text": "Swimming at the YMCA"}', 'col-12'),
-  (1, 2, null, '2019-07-26', 'checklist', jsonb_insert('{
-        “checked”: "false",
-        “value”: “5 butterfly laps”}'), 'col-8');
-  -- (1, 2, null, '2019-07-26', 'checklist', '{“checked”: "false", “value”: “10 freestyle laps”}', 'col-8'),
-  -- (1, 2, null, '2019-07-26', 'checklist', '{“checked”: "false", “value”: “5 breaststroke laps”}', 'col-8'),
-  -- (1, 3, null, '2019-07-26', 'weekly', '{"days": "MTuWThF"}', 'col-8'),
-  -- (1, 3, null, '2019-07-26', 'count', '{"count": 100, "units": "leaves"}', 'col-4'),
-  -- (1, 3, null, '2019-07-26', 'clock', '{"time": 1439}', 'col-5'),
-  -- (1, null, 1, '2019-07-26', 'weekly', '{"days": "Su"}', 'col-4'),
-  -- (1, null, 1, '2019-07-26', 'checklist', '{"checked": "false", "value": "1000 eucalyptus leaves"}', 'col-7'),
-  -- (1, null, 1, '2019-07-26', 'subtitle', '{"text": "get the good stuff from Sprouts"}', 'col-7'),
-  -- (1, null, 1, '2019-07-26', 'checklist', '{"checked": "false", "value": "shampoo"}', 'col-7'),
-  -- (1, null, 2, '2019-07-26', 'date', '{"date": "Aug-22-2019"}', 'col-6'),
-  -- (1, null, 2, '2019-07-26', 'checklist', '{"text": "get drivers license"}', 'col-7'),
-  -- (1, null, 2, '2019-07-26', 'checklist', '{"text": "bring 3 pieces of mail (proof of residence)"}', 'col-7'),
-  -- (1, null, 2, '2019-07-26', 'checklist', '{"text": "bring debit card, not credit card"}', 'col-7'),
-  -- (1, null, 2, '2019-07-26', 'checklist', '{"text": "bring passport"}', 'col-7');
+  (1, 2, null, '2019-07-26', 'checklist', '{"checked": "false", "value": "10 freestyle laps"}', 'col-8'),
+  (1, 2, null, '2019-07-26', 'checklist', '{"checked": "false", "value": "10 froggy laps"}', 'col-8'),
+  (1, 2, null, '2019-07-26', 'checklist', '{"checked": "false", "value": "5 butterfly laps"}', 'col-8'),
+  (1, 3, null, '2019-07-26', 'weekly', '{"days": "MTuWThF"}', 'col-8'),
+  (1, 3, null, '2019-07-26', 'count', '{"count": 100, "units": "leaves"}', 'col-4'),
+  (1, 3, null, '2019-07-26', 'clock', '{"time": 1439}', 'col-5'),
+  (1, null, 1, '2019-07-26', 'weekly', '{"days": "Su"}', 'col-4'),
+  (1, null, 1, '2019-07-26', 'checklist', '{"checked": "false", "value": "1000 eucalyptus leaves"}', 'col-7'),
+  (1, null, 1, '2019-07-26', 'subtitle', '{"text": "get the good stuff from Sprouts"}', 'col-7'),
+  (1, null, 1, '2019-07-26', 'checklist', '{"checked": "false", "value": "shampoo"}', 'col-7'),
+  (1, null, 2, '2019-07-26', 'date', '{"date": "Aug-22-2019"}', 'col-6'),
+  (1, null, 2, '2019-07-26', 'checklist', '{"checked": "false", "value": "get drivers license"}', 'col-7'),
+  (1, null, 2, '2019-07-26', 'checklist', '{"checked": "false", "value": "bring 3 pieces of mail (proof of residence)"}', 'col-7'),
+  (1, null, 2, '2019-07-26', 'checklist', '{"checked": "false", "value": "bring debit card, not credit card"}', 'col-7'),
+  (1, null, 2, '2019-07-26', 'checklist', '{"checked": "false", "value": "bring passport"}', 'col-7');
 
 
 
-INSERT INTO journal_entries(user_id, date, title, text, blocks)
+INSERT INTO journal_entries(user_id, date, title, text, blocks, saved)
 VALUES 
-  (1, '2019-07-28', 'Yabba dabba doo', 'I watched we bought a zoo', '{}'),
-  (1, '2019-08-02', 'This little piggy stayed home', 'I had to go to the grocery store', '{}'),
-  (1, '2019-09-14', null, 'Hey there pretty lady', '{}');
+  (1, '2019-07-28', 'Yabba dabba doo', 'I watched we bought a zoo', '{}', 'true'),
+  (1, '2019-08-02', 'This little piggy stayed home', 'I had to go to the grocery store', '{}', 'false'),
+  (1, '2019-09-14', null, 'Hey there pretty lady', '{}', 'true');
 
 
 COMMIT;

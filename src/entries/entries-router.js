@@ -46,7 +46,7 @@ entriesRouter
 entriesRouter
     .route('/search/:keyword')
     .all(requireAuth)
-    .get((req, res, next) => {
+    .post((req, res, next) => {
         const user_id = req.user.id
         const keyword = req.params.keyword
         EntriesService.geEntriesByKeyword(req.app.get('db'), user_id, keyword)
@@ -56,6 +56,22 @@ entriesRouter
                         .json({ error: 'entries not found' })
                 }
                 res.status(200).json(entries)
+            })
+            .catch(next)
+    })
+
+entriesRouter
+    .route('/date/:date')
+    .all(requireAuth)
+    .get(jsonBodyParser, (req, res, next) => {
+        const userId = req.user.id
+        const { date } = req.params
+        console.log('Date is ' , date)
+        EntriesService.getEntryById(req.app.get('db'), userId, date)
+            .then(entry => {
+                // returns goal objects with matching userId
+                console.log(`entry is ${entry[0].title}. date is ${entry[0].date}`)
+                res.status(200).json(entry[0])
             })
             .catch(next)
     })

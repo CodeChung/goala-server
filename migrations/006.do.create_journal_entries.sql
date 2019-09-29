@@ -6,5 +6,6 @@ CREATE TABLE journal_entries (
     title TEXT,
     -- text will hold journal text, encoded with ${<Stamp type={'Count'} value={2} dimension='col-4' />}
     text TEXT,
+    saved BOOLEAN NOT NULL,
     blocks jsonb
-)
+);

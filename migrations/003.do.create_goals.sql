@@ -10,3 +10,5 @@ CREATE TABLE goals (
     countdown INTEGER,
     block_sequence INTEGER[]
 )
+
+-- dashboards and rows
