@@ -31,6 +31,36 @@ remindersRouter
     })
 
 remindersRouter
+    .route('/date/:date')
+    .all(requireAuth)
+    .get((req, res, next) => {
+        const userId = req.user.id
+        const { date } = req.params
+        console.log(`DATE yo ${date}`)
+        RemindersService.getRemindersByDate(req.app.get('db'), userId, date)
+            .then(reminders => {
+                console.log(`REMINDERS ${reminders}`)
+                res.status(200).json(reminders)
+            })
+            .catch(next)
+    })
+
+remindersRouter
+    .route('/day/:day')
+    .all(requireAuth)
+    .get((req, res, next) => {
+        const userId = req.user.id
+        const { day } = req.params
+        console.log(`howdy ${day} ${userId}`)
+        RemindersService.getRemindersByDay(req.app.get('db'), userId, day)
+            .then(reminders => {
+                console.log('remind hot', reminders)
+                res.status(200).json(reminders)
+            })
+            .catch(next)
+    })
+
+remindersRouter
     .route('/:reminderId')
     .all(requireAuth)
     .get((req, res, next) => {

@@ -14,6 +14,14 @@ const GoalsService = {
             .select('*')
             .where('action_id', actionId)
     },
+    getGoalsByDay(db, userId, day) {
+        return db('goals')
+            .select('*')
+            .where('user_id', userId)
+            .then(goals => goals.filter(goal => {
+                return goal && goal.schedule && goal.schedule.schedule && Number.isInteger(goal.schedule.schedule.search(day))
+            }))
+    },
     insertGoal(db, goal) {
         return db
             .insert(goal)

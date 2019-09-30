@@ -31,6 +31,19 @@ goalsRouter
     })
 
 goalsRouter
+    .route('/day/:day')
+    .all(requireAuth)
+    .get((req, res, next) => {
+        const userId = req.user.id
+        const day = req.params
+        GoalsService.getGoalsByDay(req.app.get('db'), userId, day)
+            .then(goals => {
+                console.log(`GOALS BY DAY ${goals}`)
+                res.status(201).json(goals)
+            })
+    })
+
+goalsRouter
     .route('/:goalId')
     .all(requireAuth)
     .get((req, res, next) => {

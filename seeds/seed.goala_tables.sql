@@ -37,7 +37,8 @@ VALUES
 INSERT INTO reminders(user_id, date, title, schedule, block_sequence)
 VALUES
   (1, '2019-07-26', 'Groceries', '{"schedule": "Su"}', '{11, 12, 13, 14}'),
-  (1, '2019-07-26', 'Go to DMV', '{"date": "Aug-22-2019"}', '{15, 16, 17, 18, 19}');
+  (1, '2019-07-26', 'Go to DMV', '{"date": "Aug-22-2019"}', '{15, 16, 17, 18, 19}'),
+  (1, '2019-09-16', 'Go to Zumba', '{"date": "Sep-16-2019"}', '{15, 16, 17, 18, 19}');
 
 
 
@@ -68,11 +69,11 @@ VALUES
 
 INSERT INTO journal_entries(user_id, date, title, text, blocks, saved)
 VALUES 
-  (1, '2019-07-28', 'Yabba dabba doo', 'I watched we bought a zoo', '{}', 'true'),
+  (1, '2019-07-28', 'Yabba dabba doo', 'I watched we bought a zoo. Terrific film, Matt Damon truly gave the performance of his career. I did not like that koala in the film, however. Clearly theyre auditioning random civilians from the local zoos.', '{}', 'true'),
   (1, '2019-08-02', 'This little piggy stayed home', 'I had to go to the grocery store', '{}', 'false'),
   (1, '2019-09-14', 'Parking Lot Programming', 'Im coding in a parking lot', '{}', 'false'),
   (1, '2019-09-15', 'Working Hard to Hardly Work', 'Boss man grinding my gears real hard. After work.', '{}', 'true'),
-  (1, '2019-09-16', 'Road Warrior', 'Took my chopper out to the canyons today. Really makes you feel alive', '{}', 'false');
+  (1, '2019-09-16', 'Road Warrior', 'Took my chopper out to the canyons today. Really makes you feel alive, having the wind blowing in your face and the road racing away beneath you. It was a bright beautiful sky, the kind so clear it makes you go, whoa momma. Thats living at its finest.', '{}', 'false');
 
 
 COMMIT;
