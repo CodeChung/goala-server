@@ -44,6 +44,26 @@ entriesRouter
     })
 
 entriesRouter
+    .route('/month/:month')
+    .all(requireAuth)
+    .get((req, res, next) => {
+        const user_id = req.user.id
+        const { month } = req.params
+        EntriesService.getEntriesByMonth(
+            req.app.get('db'),
+            user_id,
+            month
+        )
+            .then(entries => {
+                console.log(`ENTRIES ${entries}`)
+                return entries
+            })
+            .then(entries => res.status(200).json(entries))
+            .catch(next)
+            
+    })
+
+entriesRouter
     .route('/search/:keyword')
     .all(requireAuth)
     .post((req, res, next) => {

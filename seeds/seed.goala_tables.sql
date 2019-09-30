@@ -70,7 +70,9 @@ INSERT INTO journal_entries(user_id, date, title, text, blocks, saved)
 VALUES 
   (1, '2019-07-28', 'Yabba dabba doo', 'I watched we bought a zoo', '{}', 'true'),
   (1, '2019-08-02', 'This little piggy stayed home', 'I had to go to the grocery store', '{}', 'false'),
-  (1, '2019-09-14', null, 'Hey there pretty lady', '{}', 'true');
+  (1, '2019-09-14', 'Parking Lot Programming', 'Im coding in a parking lot', '{}', 'false'),
+  (1, '2019-09-15', 'Working Hard to Hardly Work', 'Boss man grinding my gears real hard. After work.', '{}', 'true'),
+  (1, '2019-09-16', 'Road Warrior', 'Took my chopper out to the canyons today. Really makes you feel alive', '{}', 'false');
 
 
 COMMIT;

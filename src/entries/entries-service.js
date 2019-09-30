@@ -1,4 +1,24 @@
+const moment = require('moment');
+
 const EntriesService = {
+   getEntriesByUserId(db, userId) {
+        return db('journal_entries')
+            .select('*')
+            .where('user_id', userId)
+    }, 
+
+    getEntriesByMonth(db, userId, month) {
+        // MONTH here is a integer index starting at 0. use moment.js
+        return db('journal_entries')
+            .select('*')
+            .where('user_id', userId)
+            // .where('month', month)
+            .where('date', '>=', month)
+            .where('date', '<', moment(month).add(1,'month').format('YYYY-MM-DD'))
+    },
+
+
+
     getEntryByDate(db, userId, date) {
         return db('journal_entries')
             .select('*')
@@ -19,11 +39,7 @@ const EntriesService = {
             .where('id', entryId)
             .delete()
     },
-    getEntriesByUserId(db, userId) {
-        return db('journal_entries')
-            .select('*')
-            .where('user_id', userId)
-    },
+    
     getEntriesByKeyword(db, userId, keyword) {
         return this.getEntriesByUserId(db, userId)
             .then( entries => entries.filter(entry => entry.text.includes(keyword)) )
