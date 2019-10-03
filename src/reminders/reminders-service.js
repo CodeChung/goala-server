@@ -1,8 +1,9 @@
 const RemindersService = {
-    getReminderById(db, reminderId) {
+    getReminderById(db, userId, reminderId) {
         return db('reminders')
             .select('*')
             .where('id', reminderId)
+            .where('user_id', userId)
     },
     getRemindersByUserId(db, userId) {
         return db('reminders')

@@ -5,8 +5,24 @@ const EntriesService = {
         return db('journal_entries')
             .select('*')
             .where('user_id', userId)
+            .orderBy('date')
     }, 
-
+    updateTitle(db, userId, entryId, title) {
+        return db('journal_entries')
+            .where('user_id', userId)
+            .where('id', entryId)
+            .update({ title })
+    }, 
+    updateText(db, userId, entryId, text) {
+        return db('journal_entries')
+            .where('user_id', userId)
+            .where('id', entryId)
+            .update({ text })
+    }, 
+    getEntriesByKeyword(db, userId, keyword) {
+        return this.getEntriesByUserId(db, userId)
+            .then( entries => entries.filter(entry => entry.text.toLowerCase().includes(keyword.toLowerCase())) )
+    },
     getEntriesByMonth(db, userId, month) {
         // MONTH here is a integer index starting at 0. use moment.js
         return db('journal_entries')
@@ -35,11 +51,6 @@ const EntriesService = {
         return db('journal_entries')
             .where('id', entryId)
             .delete()
-    },
-    
-    getEntriesByKeyword(db, userId, keyword) {
-        return this.getEntriesByUserId(db, userId)
-            .then( entries => entries.filter(entry => entry.text.includes(keyword)) )
     },
     insertEntry(db, entry) {
         return db

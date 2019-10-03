@@ -66,10 +66,10 @@ entriesRouter
 entriesRouter
     .route('/search/:keyword')
     .all(requireAuth)
-    .post((req, res, next) => {
+    .get((req, res, next) => {
         const user_id = req.user.id
         const keyword = req.params.keyword
-        EntriesService.geEntriesByKeyword(req.app.get('db'), user_id, keyword)
+        EntriesService.getEntriesByKeyword(req.app.get('db'), user_id, keyword)
             .then(entries => {
                 if (!entries.length) {
                     return res.status(404)
@@ -92,6 +92,36 @@ entriesRouter
                 // returns goal objects with matching userId
                 console.log(`entry is ${entry[0].title}. date is ${entry[0].date}`)
                 res.status(200).json(entry[0])
+            })
+            .catch(next)
+    })
+
+entriesRouter
+    .route('/text/:entryId')
+    .all(requireAuth)
+    .post(jsonBodyParser, (req, res, next) => {
+        const userId = req.user.id
+        const { entryId } = req.params
+        const { text } = req.body
+        console.log(entryId, text)
+        EntriesService.updateText(req.app.get('db'), userId, entryId, text)
+            .then(entry => {
+                res.status(304).json(entry)
+            })
+            .catch(next)
+    })
+
+entriesRouter
+    .route('/title/:entryId')
+    .all(requireAuth)
+    .post(jsonBodyParser, (req, res, next) => {
+        const userId = req.user.id
+        const { entryId } = req.params
+        const { title } = req.body
+        console.log(`hey i'm updating entry ${entryId}'s title to: ${title}`)
+        EntriesService.updateTitle(req.app.get('db'), userId, entryId, title)
+            .then(entry => {
+                res.status(304).json(entry)
             })
             .catch(next)
     })

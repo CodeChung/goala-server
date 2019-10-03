@@ -1,8 +1,9 @@
 const GoalsService = {
-    getGoalById(db, goalId) {
+    getGoalById(db, userId, goalId) {
         return db('goals')
             .select('*')
             .where('id', goalId)
+            .where('user_id', userId)
     },
     getGoalsByUserId(db, userId) {
         return db('goals')

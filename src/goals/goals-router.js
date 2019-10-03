@@ -47,8 +47,9 @@ goalsRouter
     .route('/:goalId')
     .all(requireAuth)
     .get((req, res, next) => {
+        const userId = req.user.id
         const goalId = req.params.goalId
-        GoalsService.getGoalById(req.app.get('db'), goalId)
+        GoalsService.getGoalById(req.app.get('db'), userId, goalId)
             .then(goal => {
                 if (!goal.length) {
                     return res.status(404)

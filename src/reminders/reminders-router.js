@@ -65,7 +65,8 @@ remindersRouter
     .all(requireAuth)
     .get((req, res, next) => {
         const reminderId = req.params.reminderId
-        RemindersService.getReminderById(req.app.get('db'), reminderId)
+        const userId = req.user.id
+        RemindersService.getReminderById(req.app.get('db'), userId, reminderId)
             .then(reminder => {
                 if (!reminder.length) {
                     return res.status(404)
