@@ -26,9 +26,6 @@ const EntriesService = {
             .where('date', date)
     },
     
-    
-      
-    
     getEntryById(db, entryId) {
         return db('journal_entries')
             .select('*')

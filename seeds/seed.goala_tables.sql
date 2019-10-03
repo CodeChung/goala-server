@@ -69,7 +69,7 @@ VALUES
 
 INSERT INTO journal_entries(user_id, date, title, text, blocks, saved)
 VALUES 
-  (1, '2019-07-28', 'Yabba dabba doo', 'I watched we bought a zoo. Terrific film, Matt Damon truly gave the performance of his career. I did not like that koala in the film, however. Clearly theyre auditioning random civilians from the local zoos.', '{}', 'true'),
+  (1, '2019-07-28', 'Yabba dabba doo', 'I watched we bought a zoo. Terrific film, Matt Damon truly gave the performance of his career. I couldnt help but to wonder what it would have felt like to be a part of that movie.', '{}', 'true'),
   (1, '2019-08-02', 'This little piggy stayed home', 'I had to go to the grocery store', '{}', 'false'),
   (1, '2019-09-14', 'Parking Lot Programming', 'Im coding in a parking lot', '{}', 'false'),
   (1, '2019-09-15', 'Working Hard to Hardly Work', 'Boss man grinding my gears real hard. After work.', '{}', 'true'),
