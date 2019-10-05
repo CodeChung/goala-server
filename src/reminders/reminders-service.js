@@ -27,7 +27,7 @@ const RemindersService = {
         return db('reminders')
             .select('*')
             .where('user_id', userId)
-            .then(reminders => reminders.filter(reminder =>  reminder && reminder.schedule && reminder.schedule.schedule && Number.isInteger(reminder.schedule.schedule.search(day))))
+            .then(reminders => reminders.filter(reminder =>  reminder && !reminder.schedule|| reminder && reminder.schedule && reminder.schedule.schedule && Number.isInteger(reminder.schedule.schedule.search(day))))
 
             
     },

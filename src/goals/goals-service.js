@@ -20,7 +20,7 @@ const GoalsService = {
             .select('*')
             .where('user_id', userId)
             .then(goals => goals.filter(goal => {
-                return goal && goal.schedule && goal.schedule.schedule && Number.isInteger(goal.schedule.schedule.search(day))
+                return goal && !goal.schedule || goal && goal.schedule && goal.schedule.schedule && Number.isInteger(goal.schedule.schedule.search(day))
             }))
     },
     insertGoal(db, goal) {
