@@ -32,7 +32,7 @@ app.use('/api/reminders', remindersRouter)
 app.use('/api/users', usersRouter)
 
 app.get('/', (req, res) => {
-  res.send('Hello, world!')
+  res.send('Howdy, world!')
 })
 
 app.use(function errorHandler(error, req, res, next) {
