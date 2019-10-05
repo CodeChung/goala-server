@@ -27,7 +27,21 @@ const LogsService = {
             .returning('*')
             .then(log => log)
     },
-
+    updateLogValue(db, userId, logId, date, values) {
+        this.getLogByDate(db, userId, logId, date)
+            .then(log => {
+                let value = log.value ? log.value : {}
+                Object.keys(values).forEach(key => {
+                    value[key] = values[key]
+                })
+                console.log('val2e', value)
+                return db('logs')
+                    .where('user_id', userId)
+                    .where('log_id', logId)
+                    .where('date', date)
+                    .update({ value })
+            })
+    },
 
 
     getReminderById(db, reminderId) {

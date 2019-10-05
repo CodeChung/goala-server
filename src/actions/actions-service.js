@@ -18,8 +18,9 @@ const ActionsService = {
             .select('*')
             .where('user_id', userId)
     },
-    deleteaction(db, actionId) {
+    deleteAction(db, userId, actionId) {
         return db('actions')
+            .where('user_id', userId)
             .where('id', actionId)
             .delete()
     },

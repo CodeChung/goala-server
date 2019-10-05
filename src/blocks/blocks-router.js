@@ -35,42 +35,48 @@ blocksRouter
     .all(requireAuth)
     .post(jsonBodyParser, async (req, res, next) => {
         const ids = req.body
-        console.log(`
-        ------------------------------------------------------------------------------
-        ------------------------------------------------------------------------------
-        ------------------------------------------------------------------------------
-        ------------------------------------------------------------------------------
-        ------------------------------------------------------------------------------
-        ------------------------------------------------------------------------------
-        ------------------------------------------------------------------------------
-        ------------------------------------------------------------------------------
-        ------------------------------------------------------------------------------
-        ------------------------------------------------------------------------------
-        ------------------------------------------------------------------------------
-        ------------------------------------------------------------------------------
-        `)
         BlocksService.getBlockSequence(req.app.get('db'), ids)
             .then(blocks => {
+              console.log(`real travesty the orders fucked, ${ blocks}`)
                 return res.status(200).json(blocks)
             })
             .catch(next)
     })
 
 blocksRouter
+  .route('/goal/:goalId')
+  .all(requireAuth)
+  .patch(jsonBodyParser, (req, res, next) => {
+    const { block_sequence } = req.body
+    const { goalId } = req.params
+    const user_id = req.user.id
+    BlocksService.updateGoalSequence(req.app.get('db'), user_id, goalId, block_sequence)
+      .then(updatedGoal => {
+        return res.status(206).json(updatedGoal)
+      })
+  })
+
+blocksRouter
     .route('/reminder/:reminderId')
     .all(requireAuth)
     .get((req, res, next) => {
-        const reminderId = req.params.reminderId
-        blocksService.getGoalByReminderId(req.app.get('db'), reminderId)
-            .then(blocks => {
-                if (!blocks.length) {
-                    return res.status(404)
-                        .json({ error: 'block not found' })
-                }
-                res.status(200).json(blocks)
-            })
-            .catch(next)
+      const reminderId = req.params.reminderId
+      blocksService.getGoalByReminderId(req.app.get('db'), reminderId)
+          .then(blocks => {
+            console.log(blocks)
+              // if (!blocks.length) {
+              //     return res.status(404)
+              //         .json({ error: 'block not found' })
+              // }
+              res.status(200).json(blocks)
+          })
+          .catch(next)
     })
+    .patch(jsonBodyParser, (req, res, next) => {
+      const { block_sequence } = req.body
+
+    })
+
     // .delete((req, res, next) => {
     //     const goalId = req.params.goalId
     //     blocksService.deleteGoal(req.app.get('db'), goalId)

@@ -10,4 +10,4 @@ CREATE TABLE logs (
     reminder_id INTEGER
         REFERENCES reminders(id) ON DELETE CASCADE,
     value jsonb
-);
+);      

@@ -53,7 +53,7 @@ VALUES
   (1, 2, null, '2019-07-26', 'checklist', '{"checked": "false", "value": "10 froggy laps"}', 'col-8'),
   (1, 2, null, '2019-07-26', 'checklist', '{"checked": "false", "value": "5 butterfly laps"}', 'col-8'),
   (1, 3, null, '2019-07-26', 'weekly', '{"days": "MTuWThF"}', 'col-8'),
-  (1, 3, null, '2019-07-26', 'count', '{"count": 100, "units": "leaves"}', 'col-4'),
+  (1, 3, null, '2019-07-26', 'count', '{"den": 100, "units": "leaves"}', 'col-4'),
   (1, 3, null, '2019-07-26', 'clock', '{"time": 1439}', 'col-5'),
   (1, null, 1, '2019-07-26', 'weekly', '{"days": "Su"}', 'col-4'),
   (1, null, 1, '2019-07-26', 'checklist', '{"checked": "false", "value": "1000 eucalyptus leaves"}', 'col-7'),

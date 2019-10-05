@@ -10,6 +10,22 @@ const BlocksService = {
             .select('*')
             .whereIn('id', ids)
     },
+    updateGoalSequence(db, user_id, goal_id, block_sequence) {
+        console.log(`id ${goal_id}, user_id ${user_id}, block_sequence ${block_sequence} `)
+        return db('goals')
+            .where('user_id', user_id)
+            .where('id', goal_id)
+            .update({ block_sequence })
+            .returning('*')
+            .then(res => {
+                // console.log(`Yo this is the new res ${Object.keys(res[0])}`)
+                console.log('Our new goal: ',res[0])
+                return res[0]
+            })
+    },
+
+
+
 
     // gets the sequence of block ids matching goalId
     async getBlocksByGoalId(db, goalId) {

@@ -32,8 +32,9 @@ const GoalsService = {
                 return this.getGoalsByUserId(db, goal.user_id)
             })
     },
-    deleteGoal(db, goalId) {
+    deleteGoal(db, userId, goalId) {
         return db('goals')
+            .where('user_id', userId)
             .where('id', goalId)
             .delete()
     }

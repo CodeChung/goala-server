@@ -21,9 +21,9 @@ goalsRouter
     })
     .post(jsonBodyParser, (req, res) => {
         const user_id = req.user.id
-        const { action_id, title, schedule, block_sequence } = req.body
-        const newGoal = { action_id, user_id, title, schedule, duration, block_sequence, last_logged }
-
+        const { title, action_id } = req.body
+        const newGoal = { user_id, title, action_id }
+        console.log(title, user_id)
         GoalsService.insertGoal(req.app.get('db'), newGoal)
             .then(goals => {
                 res.status(201).json(goals)
@@ -60,15 +60,18 @@ goalsRouter
             .catch(next)
     })
     .delete((req, res, next) => {
-        const goalId = req.params.goalId
-        GoalsService.deleteGoal(req.app.get('db'), goalId)
-            .then(goalDeleted => {
-                if (!goalDeleted) {
-                    return res.status(401)
-                        .json({ error: 'Unable to delete goal, try again'})
-                }
-                res.status(201)
-            })
+        const userId = req.user.id
+        const { goalId } = req.params
+        console.log('hiya', userId, goalId)
+        GoalsService.deleteGoal(req.app.get('db'), userId, goalId)
+            // .then(goalDeleted => {
+            //     if (!goalDeleted) {
+            //         return res.status(401)
+            //             .json({ error: 'Unable to delete goal, try again'})
+            //     }
+            //     res.status(201)
+            // })
+            .then(goals => goals)
     })
     
 module.exports = goalsRouter

@@ -7,6 +7,16 @@ const EntriesService = {
             .where('user_id', userId)
             .orderBy('date')
     }, 
+    insertEntry(db, entry) {
+        entry.saved = false
+        return db
+            .insert(entry)
+            .into('journal_entries')
+            .returning('*')
+            .then(entry => {
+                return this.getEntriesByUserId(db, entry.user_id)
+            })
+    },
     updateTitle(db, userId, entryId, title) {
         return db('journal_entries')
             .where('user_id', userId)
@@ -51,15 +61,6 @@ const EntriesService = {
         return db('journal_entries')
             .where('id', entryId)
             .delete()
-    },
-    insertEntry(db, entry) {
-        return db
-            .insert(entry)
-            .into('journal_entries')
-            .returning('*')
-            .then(entry => {
-                return this.getEntriesByUserId(db, entry.user_id)
-            })
     },
     updateEntry(db, entryId, entryUpdates) {
         return db('journal_entries')
