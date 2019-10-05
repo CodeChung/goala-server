@@ -18,14 +18,15 @@ remindersRouter
             })
             .catch(next)
     })
-    .post(jsonBodyParser, (req, res) => {
+    .post(jsonBodyParser, (req, res, next) => {
         const user_id = req.user.id
-        const { title, date, schedule, block_sequence } = req.body
-        const newreminder = { user_id, title, date, schedule, block_sequence }
+        const { title,  } = req.body
+        const newReminder = { user_id, title }
 
         RemindersService.insertReminder(req.app.get('db'), newReminder)
-            .then(reminders => {
-                res.status(201).json(reminders)
+            .then(reminder => {
+                console.log(`REMINDERS anew: ${reminder.id}`)
+                res.status(201).json(reminder)
             })
             .catch(next)
     })
@@ -92,7 +93,8 @@ remindersRouter
     })
     .delete((req, res, next) => {
         const reminderId = req.params.reminderId
-        RemindersService.deleteReminder(req.app.get('db'), reminderId)
+        const userId = req.user.id
+        RemindersService.deleteReminder(req.app.get('db'), userId, reminderId)
             .then(reminderDeleted => {
                 if (!reminderDeleted) {
                     return res.status(401)

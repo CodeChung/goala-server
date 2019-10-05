@@ -1,4 +1,11 @@
 const RemindersService = {
+    deleteReminder(db, userId, reminderId) {
+        return db('reminders')
+            .where('user_id', userId)
+            .where('id', reminderId)
+            .delete()
+            .returning('*')
+    },
     getReminderById(db, userId, reminderId) {
         return db('reminders')
             .select('*')
@@ -35,20 +42,12 @@ const RemindersService = {
             .insert(reminder)
             .into('reminders')
             .returning('*')
-            .then(res => {
-                return this.getremindersByUserId(db, reminder.user_id)
-            })
     },
     updateReminder(db, reminderId, reminderUpdates) {
         return db('reminders')
             .where('id', reminderId)
             .update(reminderUpdates)
     },
-    deleteReminder(db, reminderId) {
-        return db('reminders')
-            .where('id', reminderId)
-            .delete()
-    }
 }
 
 module.exports = RemindersService
