@@ -1,7 +1,7 @@
 # Goala API Endpoints
 
 ## Note: all endpoints require:
-**"authorization": "bearer TokenService.getAuthToken()"**
+**header: { "authorization": "bearer TokenService.getAuthToken()" }**
 
 ## /goals
 **GET /api/goals**
