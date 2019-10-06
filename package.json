@@ -1,5 +1,5 @@
 {
-  "name": "coachbot-server",
+  "name": "goala-server",
   "version": "0.0.1",
   "description": "",
   "main": "src/server.js",
