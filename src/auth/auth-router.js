@@ -9,7 +9,6 @@ authRouter
     .post(jsonBodyParser, (req, res, next) => {
         const { username, password } = req.body
         const loginUser = { username, password }
-        console.log(username, password)
         for (const [key, value] of Object.entries(loginUser)) {
             if (!value) {
                 return res.status(400).json({
@@ -22,7 +21,6 @@ authRouter
             loginUser.username
         )
             .then(dbUser => {
-                console.log(loginUser)
                 if (!dbUser) {
                     return res.status(400).json({
                         error: 'Incorrect username'
