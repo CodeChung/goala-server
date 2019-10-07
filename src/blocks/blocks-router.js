@@ -7,29 +7,6 @@ const uuid = require('uuid');
 const blocksRouter = express.Router()
 const jsonBodyParser = express.json()
 
-// blocksRouter
-//     .route('/goal/:goalId')
-//     .all(requireAuth)
-//     .get((req, res, next) => {
-//         const { goalId } = req.params
-//         BlocksService.getblocksByGoalId(req.app.get('db'), goalId)
-//             .then(blocks => {
-//                 // returns goal objects with matching userId
-//                 res.status(200).json(blocks)
-//             })
-//             .catch(next)
-//     })
-    // .post(jsonBodyParser, (req, res) => {
-    //     const user_id = req.user.id
-    //     const { action_id, title, schedule, blocks_sequence } = req.body
-    //     const newGoal = { action_id, user_id, title, schedule, duration, blocks_sequence, last_logged }
-
-    //     blocksService.insertGoal(req.app.get('db'), newGoal)
-    //         .then(blocks => {
-    //             res.status(201).json(blocks)
-    //         })
-    // })
-
 blocksRouter
     .route('/')
     .all(requireAuth)
@@ -37,10 +14,43 @@ blocksRouter
         const ids = req.body
         BlocksService.getBlockSequence(req.app.get('db'), ids)
             .then(blocks => {
-              console.log(`real travesty the orders fucked, ${ blocks}`)
                 return res.status(200).json(blocks)
             })
             .catch(next)
+    })
+
+blocksRouter
+  .route('/block/:blockId')
+  .all(requireAuth)
+  .post(jsonBodyParser, async (req, res, next) => {
+      const user_id = req.user.id
+      const { blockId } = req.params
+      const { value } = req.body
+      console.log(
+        `NDFJKSHBGKBJNHGF HJI:FHGM HBHSGDF HJKHBG
+        ${user_id}, ${blockId}, ${value}c}
+        afnjksdhbdsghafbnnasdjhmgjfsajhmf
+        `
+      )
+      BlocksService.updateBlock(req.app.get('db'), user_id, blockId, value)
+          .then(blocks => {
+              return res.status(200).json(blocks)
+          })
+          .catch(next)
+  })
+
+blocksRouter
+    .route('/new')
+    .all(requireAuth)
+    .post(jsonBodyParser, (req, res, next) => {
+      const userId = req.user.id
+      const newBlock = req.body
+      newBlock.user_id = userId
+      console.log(newBlock , 'new blocking')
+      BlocksService.insertBlock(req.app.get('db'), newBlock)
+        .then(newBlock => {
+          return res.status(204).json(newBlock)
+        })
     })
 
 blocksRouter

@@ -1,4 +1,10 @@
 const BlocksService = {
+    insertBlock(db, block) {
+        return db('blocks')
+            .insert(block)
+            .returning('*')
+            .then(res => res[0])
+    },
     getBlockById(db, blockId) {
         return db('blocks')
             .select('*')
@@ -10,8 +16,16 @@ const BlocksService = {
             .select('*')
             .whereIn('id', ids)
     },
+    updateBlock(db, user_id, id, value) {
+        return db('blocks')
+            .where('user_id', user_id)
+            .where('id', id)
+            .update({ value })
+            .returning('*')
+            .then(res => res[0])
+    },
     updateGoalSequence(db, user_id, goal_id, block_sequence) {
-        console.log(`id ${goal_id}, user_id ${user_id}, block_sequence ${block_sequence} `)
+        console.log(`id ${goal_id} NEWblock_sequence ${block_sequence} `)
         return db('goals')
             .where('user_id', user_id)
             .where('id', goal_id)
@@ -46,15 +60,6 @@ const BlocksService = {
     },
 
 
-    insertBlock(db, block) {
-        return db
-            .insert(block)
-            .into('blocks')
-            .returning('*')
-            .then(res => {
-                return this.getblocksByUserId(db, block.user_id)
-            })
-    },
     async mapBlockById(db, blockSequence) {
         return blockSequence.map(blockId => {
             return db('blocks')
