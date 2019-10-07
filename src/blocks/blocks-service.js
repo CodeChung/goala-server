@@ -1,7 +1,20 @@
 const BlocksService = {
-    insertBlock(db, block) {
+    async insertBlocks(db, user_id, blocks, goal_id, reminder_id) {
+        const newBlocks = blocks.map(block => 
+            ({
+                index: block.index, 
+                data: { user_id, reminder_id, goal_id, dimension: 'col-12', type: block.block.type, value: {} }
+            }))
+        let updatedBlocks = []
+        for (let i = 0; i < newBlocks.length; i++) {
+            const addedBlock = await this.insertNewBlock(db, newBlocks[i].data)
+            updatedBlocks.push({ block: addedBlock, index: newBlocks[i].index })
+        }
+        return updatedBlocks
+    },
+    async insertNewBlock(db, newBlock) {
         return db('blocks')
-            .insert(block)
+            .insert(newBlock)
             .returning('*')
             .then(res => res[0])
     },

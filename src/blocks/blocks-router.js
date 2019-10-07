@@ -1,8 +1,6 @@
 const express = require('express');
-const path = require('path');
 const BlocksService = require('./blocks-service');
 const requireAuth = require('../middleware/jwt-auth');
-const uuid = require('uuid');
 
 const blocksRouter = express.Router()
 const jsonBodyParser = express.json()
@@ -22,36 +20,39 @@ blocksRouter
 blocksRouter
   .route('/block/:blockId')
   .all(requireAuth)
-  .post(jsonBodyParser, async (req, res, next) => {
+  .patch(jsonBodyParser, async (req, res, next) => {
       const user_id = req.user.id
       const { blockId } = req.params
       const { value } = req.body
-      console.log(
-        `NDFJKSHBGKBJNHGF HJI:FHGM HBHSGDF HJKHBG
-        ${user_id}, ${blockId}, ${value}c}
-        afnjksdhbdsghafbnnasdjhmgjfsajhmf
-        `
-      )
       BlocksService.updateBlock(req.app.get('db'), user_id, blockId, value)
           .then(blocks => {
-              return res.status(200).json(blocks)
+              return res.status(200).send(blocks)
           })
           .catch(next)
   })
 
 blocksRouter
-    .route('/new')
-    .all(requireAuth)
-    .post(jsonBodyParser, (req, res, next) => {
-      const userId = req.user.id
-      const newBlock = req.body
-      newBlock.user_id = userId
-      console.log(newBlock , 'new blocking')
-      BlocksService.insertBlock(req.app.get('db'), newBlock)
-        .then(newBlock => {
-          return res.status(204).json(newBlock)
-        })
+  .route('/new')
+  .all(requireAuth)
+  .post(jsonBodyParser, async (req, res, next) => {
+    const userId = req.user.id
+    const { newBlocks, goal_id, reminder_id } = req.body
+    const updatedBlocks = await BlocksService.insertBlocks(req.app.get('db'), userId, newBlocks, goal_id, reminder_id).then(res => res)
+    let response = JSON.stringify(updatedBlocks)
+    return new Promise(function(resolve, reject) {
+      resolve(response)
     })
+      .then(updatedBlocks => {
+        console.log(updatedBlocks)
+        if (!updatedBlocks.length) {
+          return res.status(404).json({
+            error: `No new blocks`
+          })
+        }
+        
+        return res.status(204).json(updatedBlocks)
+      })    
+  })
 
 blocksRouter
   .route('/goal/:goalId')
