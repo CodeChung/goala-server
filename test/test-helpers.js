@@ -149,6 +149,11 @@ function seedActions(db, actions) {
         .then(() => {})
 }
 
+function seedBlocks(db, blocks) {
+    return db.into('blocks').insert(blocks)
+        .then(() => {})
+}
+
 module.exports = {
     makeAuthHeader,
     makeActionsArray,
@@ -158,4 +163,5 @@ module.exports = {
     cleanTables,
     seedUsers,
     seedActions,
+    seedBlocks,
 }
