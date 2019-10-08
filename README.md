@@ -1,7 +1,51 @@
 # Goala API (https://hc9825-goala-app.now.sh)
+# Getting Started
+
+### Installing
+
+Clone the repository and download dependencies.
+
+```
+$ git clone https://github.com/CodeChung/goala-server.git
+$ cd goala-server
+$ npm install
+
+```
+
+### Launching
+
+Start the development server.
+
+```
+$ npm run dev
+
+```
+
+This will automatically open a new browser window with the project.
+
+### Testing
+
+Run tests with Jest and Enzyme.
+
+```
+$ npm run test
+```
+
+### Setting up Database
+
+Create a postgres database
+`
+$ createdb goala
+$ npm run migrate
+`
+Seeds are available in the seeds directory
+`
+$ psql \i ./seeds/seed.goala_tables.sql
+`
+
+## Endpoints:
 ## Required:
 - Authorization: Bearer {LoginToken}
-## Endpoints:
 ### /api/actions
 - `GET` - Returns actions with matching user id.
 - `POST` - Creates action with user id.

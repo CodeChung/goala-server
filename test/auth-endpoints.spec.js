@@ -50,7 +50,7 @@ describe('Auth Endpoints', function() {
         }
 
         it(`responds with 400 'Incorrect username' when bad username`, () => {
-            const userInvalidName = {username: 'timothy', password: 'password'}
+            const userInvalidName = {username: 'simothy', password: 'password'}
 
             return supertest(app)
                 .post('/api/auth')
