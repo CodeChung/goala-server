@@ -91,9 +91,7 @@ describe('Auth Endpoints', function() {
             return supertest(app)
                 .post('/api/auth')
                 .send(userValid)
-                .expect(200, {
-                    authToken: expectedToken
-                })
+                .expect(200)
         })
     })
 })

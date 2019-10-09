@@ -40,6 +40,56 @@ function makeActionsArray() {
     ]
 }
 
+function makeGoalsArray() {
+    return [
+        {
+            user_id: 1,
+            action_id: 1,
+            title: 'Yolo',
+            last_logged: new Date(),
+            schedule: {},
+            countdown: 4,
+            block_sequence: [1,2,3]
+        },
+        {
+            user_id: 1,
+            action_id: 2,
+            title: 'Cholula',
+            last_logged: new Date(),
+            schedule: {},
+            countdown: 21,
+            block_sequence: [4,5,6]
+        },
+        {
+            user_id: 1,
+            action_id: 3,
+            title: 'Third goal',
+            last_logged: new Date(),
+            schedule: {},
+            countdown: 44,
+            block_sequence: [7,8]
+        },
+        {
+            user_id: 2,
+            action_id: 4,
+            title: 'Fourth Goal',
+            last_logged: new Date(),
+            schedule: {},
+            countdown: 93,
+            block_sequence: [9,10]
+        },
+        {
+            user_id: 2,
+            action_id: 5,
+            title: '5 goal',
+            last_logged: new Date(),
+            schedule: {},
+            countdown: 1,
+            block_sequence: [11,12,13]
+        },
+    ]
+}
+
 function makeBlocksArray() {
     return [
         {
@@ -130,8 +180,9 @@ function makeFixtures() {
     const testUsers = makeUsersArray()
     const testActions = makeActionsArray()
     const testBlocks = makeBlocksArray()
+    const testGoals = makeGoalsArray()
 
-    return { testUsers, testActions, testBlocks }
+    return { testUsers, testActions, testBlocks, testGoals }
 }
 
 function seedUsers(db, users) {
@@ -149,6 +200,11 @@ function seedActions(db, actions) {
         .then(() => {})
 }
 
+function seedGoals(db, goals) {
+    return db.into('goals').insert(goals)
+        .then(() => {})
+}
+
 function seedBlocks(db, blocks) {
     return db.into('blocks').insert(blocks)
         .then(() => {})
@@ -159,9 +215,11 @@ module.exports = {
     makeActionsArray,
     makeBlocksArray,
     makeUsersArray,
+    makeGoalsArray,
     makeFixtures,
     cleanTables,
     seedUsers,
     seedActions,
     seedBlocks,
+    seedGoals,
 }
