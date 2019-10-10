@@ -1,5 +1,7 @@
 const express = require('express');
 const BlocksService = require('./blocks-service');
+const RemindersService = require('../reminders/reminders-service');
+const GoalsService = require('../goals/goals-service');
 const requireAuth = require('../middleware/jwt-auth');
 
 const blocksRouter = express.Router()
@@ -16,6 +18,33 @@ blocksRouter
             })
             .catch(next)
     })
+
+blocksRouter
+  .route('/title')
+  .all(requireAuth)
+  .post(jsonBodyParser, async (req, res, next) => {
+    const { type } = req.headers
+    const { typeId, title } = req.body
+    const userId = req.user.id
+
+    console.log(`type: ${type}, typeId: ${typeId}, title: ${title}`)
+    if (type === 'reminder') {
+      console.log(`reminder: ${type}, reminderId: ${typeId}, title: ${title}`)
+      RemindersService.updateReminderTitle(
+        req.app.get('db'), userId, typeId, title
+      )
+    } else if (type === 'goal') {
+      GoalsService.updateGoalTitle(
+        req.app.get('db'), userId, typeId, title
+      )
+        .then(updatedGoal => res.status(200).json(updatedGoal))
+        .catch(next)
+    } else {
+      return res.status(400).json({ error: { 
+        message: 'Must provide type in header reminder or goal' } 
+      })
+    }
+  })
 
 blocksRouter
   .route('/block/:blockId')

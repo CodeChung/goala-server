@@ -32,6 +32,15 @@ const GoalsService = {
                 return this.getGoalsByUserId(db, goal.user_id)
             })
     },
+    updateGoalTitle(db, userId, goalId, title) {
+        return db('goals')
+            .where('id', goalId)
+            .where('user_id', userId)
+            .update({ title })
+            .then(goal => {
+                return this.getGoalById(db, userId, goalId)
+            })
+    },
     deleteGoal(db, userId, goalId) {
         return db('goals')
             .where('user_id', userId)

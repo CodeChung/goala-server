@@ -29,7 +29,15 @@ const RemindersService = {
             .where('user_id', userId)
             .then(reminders => reminders.filter(reminder =>  reminder && !reminder.schedule|| reminder && reminder.schedule && reminder.schedule.schedule && Number.isInteger(reminder.schedule.schedule.search(day))))
 
-            
+    },
+    updateReminderTitle(db, userId, reminderId, title) {
+        return db('reminders')
+            .where('id', reminderId)
+            .where('user_id', userId)
+            .update({ title })
+            .then(reminder => {
+                return this.getReminderById(db, userId, reminderId)
+            })
     },
 
     getRemindersByActionId(db, actionId) {
