@@ -27,9 +27,7 @@ blocksRouter
     const { typeId, title } = req.body
     const userId = req.user.id
 
-    console.log(`type: ${type}, typeId: ${typeId}, title: ${title}`)
     if (type === 'reminder') {
-      console.log(`reminder: ${type}, reminderId: ${typeId}, title: ${title}`)
       RemindersService.updateReminderTitle(
         req.app.get('db'), userId, typeId, title
       )
@@ -68,19 +66,7 @@ blocksRouter
     const { newBlocks, goal_id, reminder_id } = req.body
     const updatedBlocks = await BlocksService.insertBlocks(req.app.get('db'), userId, newBlocks, goal_id, reminder_id).then(res => res)
     let response = JSON.stringify(updatedBlocks)
-    return new Promise(function(resolve, reject) {
-      resolve(response)
-    })
-      .then(updatedBlocks => {
-        console.log(updatedBlocks)
-        if (!updatedBlocks.length) {
-          return res.status(404).json({
-            error: `No new blocks`
-          })
-        }
-        
-        return res.status(204).json(updatedBlocks)
-      })    
+    res.status(201).json(updatedBlocks)
   })
 
 blocksRouter
@@ -114,20 +100,13 @@ blocksRouter
     })
     .patch(jsonBodyParser, (req, res, next) => {
       const { block_sequence } = req.body
-
+      const { reminderId } = req.params
+      const user_id = req.user.id
+      BlocksService.updateReminderSequence(req.app.get('db'), user_id, reminderId, block_sequence)
+        .then(updatedReminder => {
+          return res.status(206).json(updatedReminder)
+        })
     })
-
-    // .delete((req, res, next) => {
-    //     const goalId = req.params.goalId
-    //     blocksService.deleteGoal(req.app.get('db'), goalId)
-    //         .then(goalDeleted => {
-    //             if (!goalDeleted) {
-    //                 return res.status(401)
-    //                     .json({ error: 'Unable to delete goal, try again'})
-    //             }
-    //             res.status(201)
-    //         })
-    // })
 
 /* async/await syntax for promises */
 async function checkBlock(req, res, next) {

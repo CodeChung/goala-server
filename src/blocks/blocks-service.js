@@ -45,8 +45,16 @@ const BlocksService = {
             .update({ block_sequence })
             .returning('*')
             .then(res => {
-                // console.log(`Yo this is the new res ${Object.keys(res[0])}`)
-                console.log('Our new goal: ',res[0])
+                return res[0]
+            })
+    },
+    updateReminderSequence(db, user_id, reminder_id, block_sequence) {
+        return db('reminders')
+            .where('user_id', user_id)
+            .where('id', reminder_id)
+            .update({ block_sequence })
+            .returning('*')
+            .then(res => {
                 return res[0]
             })
     },
