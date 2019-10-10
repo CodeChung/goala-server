@@ -23,7 +23,6 @@ goalsRouter
         const user_id = req.user.id
         const { title, action_id } = req.body
         const newGoal = { user_id, title, action_id }
-        console.log(title, user_id)
         GoalsService.insertGoal(req.app.get('db'), newGoal)
             .then(goals => {
                 res.status(201).json(goals)
@@ -38,7 +37,6 @@ goalsRouter
         const day = req.params
         GoalsService.getGoalsByDay(req.app.get('db'), userId, day)
             .then(goals => {
-                console.log(`GOALS BY DAY ${goals}`)
                 res.status(201).json(goals)
             })
     })
@@ -62,15 +60,7 @@ goalsRouter
     .delete((req, res, next) => {
         const userId = req.user.id
         const { goalId } = req.params
-        console.log('hiya', userId, goalId)
         GoalsService.deleteGoal(req.app.get('db'), userId, goalId)
-            // .then(goalDeleted => {
-            //     if (!goalDeleted) {
-            //         return res.status(401)
-            //             .json({ error: 'Unable to delete goal, try again'})
-            //     }
-            //     res.status(201)
-            // })
             .then(goals => goals)
     })
     

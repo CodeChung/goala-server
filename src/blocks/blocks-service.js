@@ -38,7 +38,6 @@ const BlocksService = {
             .then(res => res[0])
     },
     updateGoalSequence(db, user_id, goal_id, block_sequence) {
-        console.log(`id ${goal_id} NEWblock_sequence ${block_sequence} `)
         return db('goals')
             .where('user_id', user_id)
             .where('id', goal_id)

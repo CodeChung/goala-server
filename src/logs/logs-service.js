@@ -14,8 +14,6 @@ const LogsService = {
             goal_id = logId.slice(2, logId.length)
         }
 
-        console.log(`Breaking news ${logId}, goals  ${ goal_id}  and reminders ${ reminder_id }`)
-
         return db('logs')
             .insert({
                 user_id: userId,
@@ -34,7 +32,6 @@ const LogsService = {
                 Object.keys(values).forEach(key => {
                     value[key] = values[key]
                 })
-                console.log('val2e', value)
                 return db('logs')
                     .where('user_id', userId)
                     .where('log_id', logId)

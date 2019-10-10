@@ -55,7 +55,6 @@ entriesRouter
             month
         )
             .then(entries => {
-                console.log(`ENTRIES ${entries}`)
                 return entries
             })
             .then(entries => res.status(200).json(entries))
@@ -86,11 +85,8 @@ entriesRouter
     .get(jsonBodyParser, (req, res, next) => {
         const userId = req.user.id
         const { date } = req.params
-        console.log('Date is ' , date)
         EntriesService.getEntryById(req.app.get('db'), userId, date)
             .then(entry => {
-                // returns goal objects with matching userId
-                console.log(`entry is ${entry[0].title}. date is ${entry[0].date}`)
                 res.status(200).json(entry[0])
             })
             .catch(next)
@@ -103,7 +99,6 @@ entriesRouter
         const userId = req.user.id
         const { entryId } = req.params
         const { text } = req.body
-        console.log(entryId, text)
         EntriesService.updateText(req.app.get('db'), userId, entryId, text)
             .then(entry => {
                 res.status(304).json(entry)
@@ -118,7 +113,6 @@ entriesRouter
         const userId = req.user.id
         const { entryId } = req.params
         const { title } = req.body
-        console.log(`hey i'm updating entry ${entryId}'s title to: ${title}`)
         EntriesService.updateTitle(req.app.get('db'), userId, entryId, title)
             .then(entry => {
                 res.status(304).json(entry)

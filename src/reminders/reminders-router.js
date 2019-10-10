@@ -25,7 +25,6 @@ remindersRouter
 
         RemindersService.insertReminder(req.app.get('db'), newReminder)
             .then(reminder => {
-                console.log(`REMINDERS anew: ${reminder.id}`)
                 res.status(201).json(reminder)
             })
             .catch(next)
@@ -37,10 +36,8 @@ remindersRouter
     .get((req, res, next) => {
         const userId = req.user.id
         const { date } = req.params
-        console.log(`DATE yo ${date}`)
         RemindersService.getRemindersByDate(req.app.get('db'), userId, date)
             .then(reminders => {
-                console.log(`REMINDERS ${reminders}`)
                 res.status(200).json(reminders)
             })
             .catch(next)
@@ -52,10 +49,8 @@ remindersRouter
     .get((req, res, next) => {
         const userId = req.user.id
         const { day } = req.params
-        console.log(`howdy ${day} ${userId}`)
         RemindersService.getRemindersByDay(req.app.get('db'), userId, day)
             .then(reminders => {
-                console.log('remind hot', reminders)
                 res.status(200).json(reminders)
             })
             .catch(next)

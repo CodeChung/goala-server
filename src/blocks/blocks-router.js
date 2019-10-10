@@ -89,11 +89,6 @@ blocksRouter
       const reminderId = req.params.reminderId
       blocksService.getGoalByReminderId(req.app.get('db'), reminderId)
           .then(blocks => {
-            console.log(blocks)
-              // if (!blocks.length) {
-              //     return res.status(404)
-              //         .json({ error: 'block not found' })
-              // }
               res.status(200).json(blocks)
           })
           .catch(next)

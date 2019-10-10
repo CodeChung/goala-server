@@ -14,8 +14,7 @@ logsRouter
         const logId = req.params.logId
         LogsService.createLog(req.app.get('db'), userId, logId)
             .then(newLog => {
-                console.log(`NEW LOG BABY OH YEAH`, newLog)
-                
+                return newLog
             })
 
     })
@@ -27,10 +26,8 @@ logsRouter
         const userId = req.user.id
         const logId = req.params.logId
         const date = req.params.date
-        console.log('YUM', userId, logId, date)
         LogsService.getLogByDate(req.app.get('db'), userId, logId, date)
             .then(logs => {
-                // console.log('FRESH LOGS>>>', res)
                 return res.status(201).json(logs)
             })
             .catch(next)
@@ -41,7 +38,6 @@ logsRouter
         const { values } = req.body
         LogsService.updateLogValue(req.app.get('db'), userId, logId, date, values)
             .then(newLog => {
-                console.log('NEW LOG update: ', newLog)
                 return res.status(204).json(newLog)
             })
     })
@@ -49,11 +45,9 @@ logsRouter
         const userId = req.user.id
         const logId = req.params.logId
         const date = req.params.date
-        console.log('WAIT UP ', userId, logId, date)
         LogsService.createLog(req.app.get('db'), userId, logId, date)
             .then(newLog => {
-                console.log(`NEW LOG BABY OH YEAH`, newLog)
-                
+                return newLog
             })
             .catch(next)
 

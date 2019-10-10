@@ -37,7 +37,6 @@ actionsRouter
         const user_id = req.user.id
         const { title } = req.body
         const newAction = { user_id, title }
-        console.log(title, user_id)
         ActionsService.insertAction(req.app.get('db'), newAction)
             .then(actions => {
                 res.status(201).json(actions)
@@ -51,7 +50,6 @@ actionsRouter
     .delete((req, res, next) => {
         const actionId = req.params
         const userId = req.user.id
-        console.log(actionId, userId)
         ActionsService.deleteAction(req.app.get('db'), userId, actionId.actionId)
             .then(actions => actions)
     })
