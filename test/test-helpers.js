@@ -13,27 +13,22 @@ function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
 function makeActionsArray() {
     return [
         {
-            id: 1,
             user_id: 1,
             title: 'exercise'
         },
         {
-            id: 2,
             user_id: 1,
             title: 'diet'
         },
         {
-            id: 3,
             user_id: 1,
             title: 'budgeting'
         },
         {
-            id: 4,
             user_id: 2,
             title: 'knitting'
         },
         {
-            id: 5,
             user_id: 2,
             title: 'karate'
         },
@@ -86,6 +81,53 @@ function makeGoalsArray() {
             schedule: {},
             countdown: 1,
             block_sequence: [11,12,13]
+        },
+    ]
+}
+
+function makeRemindersArray() {
+    return [
+        {
+            user_id: 1,
+            title: 'Reminder-1',
+            date: new Date(),
+            schedule: {},        
+            block_sequence: [14,15,16]
+        },
+        {
+            user_id: 1,
+            title: 'Reminder-2',
+            date: new Date(),
+            schedule: {},        
+            block_sequence: [17,18,19]
+        },
+        {
+            user_id: 3,
+            title: 'Reminder-3',
+            date: new Date(),
+            schedule: {},        
+            block_sequence: [20,21]
+        },
+        {
+            user_id: 1,
+            title: 'Reminder-4',
+            date: new Date(),
+            schedule: {},        
+            block_sequence: [22]
+        },
+        {
+            user_id: 2,
+            title: 'Reminder-5',
+            date: new Date(),
+            schedule: {},        
+            block_sequence: [23,24]
+        },
+        {
+            user_id: 3,
+            title: 'Reminder-6',
+            date: new Date(),
+            schedule: {},        
+            block_sequence: [25]
         },
     ]
 }
@@ -181,8 +223,9 @@ function makeFixtures() {
     const testActions = makeActionsArray()
     const testBlocks = makeBlocksArray()
     const testGoals = makeGoalsArray()
+    const testReminders = makeRemindersArray()
 
-    return { testUsers, testActions, testBlocks, testGoals }
+    return { testUsers, testActions, testBlocks, testGoals, testReminders }
 }
 
 function seedUsers(db, users) {
@@ -210,16 +253,22 @@ function seedBlocks(db, blocks) {
         .then(() => {})
 }
 
+function seedReminders(db, reminders) {
+    return db.into('reminders').insert(reminders)
+}
+
 module.exports = {
     makeAuthHeader,
     makeActionsArray,
     makeBlocksArray,
     makeUsersArray,
     makeGoalsArray,
+    makeRemindersArray,
     makeFixtures,
     cleanTables,
     seedUsers,
     seedActions,
     seedBlocks,
     seedGoals,
+    seedReminders,
 }

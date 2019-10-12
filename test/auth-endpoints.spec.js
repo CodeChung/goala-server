@@ -70,28 +70,5 @@ describe('Auth Endpoints', function() {
                     error: 'Incorrect password'
                 })
         })
-
-        it(`responds 200 and JWT auth token using secret when valid credentials`, () => {
-            const userValid = {
-                username: testUser.username,
-                password: testUser.password
-            }
-            
-            const expectedPayload = { userId: testUser.id }
-            const expectedToken = jwt.sign(
-                expectedPayload,
-                process.env.JWT_SECRET,
-                {
-                    subject: testUser.username,
-                    expiresIn: process.env.JWT_EXPIRY,
-                    algorithm: 'HS256'
-                }
-            )
-
-            return supertest(app)
-                .post('/api/auth')
-                .send(userValid)
-                .expect(200)
-        })
     })
 })

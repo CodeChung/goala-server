@@ -3,10 +3,10 @@ const bcrypt = require('bcryptjs')
 const app = require('../src/app')
 const helpers = require('./test-helpers')
 
-describe('Blocks Endpoints', () => {
+describe.only('Blocks Endpoints', () => {
     let db
 
-    const { testUsers, testBlocks } = helpers.makeFixtures()
+    const { testUsers, testActions, testBlocks, testGoals, testReminders } = helpers.makeFixtures()
     const testUser = testUsers[0]
     
     before('make knex instance', () => {
@@ -27,10 +27,12 @@ describe('Blocks Endpoints', () => {
         context('POST', () => {
             beforeEach('insert users', () => {
                 helpers.seedUsers(db, testUsers)
+                helpers.seedActions(db, testActions)
+                helpers.seedGoals(db, testGoals)
+                helpers.seedReminders(db, testReminders)
                 helpers.seedBlocks(db, testBlocks)
             })
             
-
             it(`responds 200 with blocks that match ids`, () => {
                 const ids = [1,2,4]
                 const expectedBlocks = testBlocks.filter(block => ids.includes(block.id))
